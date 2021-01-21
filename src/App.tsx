@@ -16,7 +16,7 @@ const App = observer(() => {
     <SafeAreaView style={styles.body}>
       {store.errorStatus && <Text>{store.errorMessage}</Text>}
 
-      {store.scannerOpened ? (
+      {store.scannerOpened && (
         <View style={styles.camera_container}>
           <CameraKitCameraScreen
             showFrame={true}
@@ -26,11 +26,10 @@ const App = observer(() => {
               store.onBarcodeScan(event.nativeEvent.codeStringValue);
             }}
           />
-          <View>
-            <Text>TEXT</Text>
-          </View>
         </View>
-      ) : (
+      )}
+
+      {!store.scannerOpened && !store.qrValue && (
         <View style={styles.button_container}>
           <TouchableOpacity
             style={styles.camera_button}
@@ -38,9 +37,20 @@ const App = observer(() => {
             onPress={store.openScanner}>
             <Text style={styles.button_text}>Open camera</Text>
           </TouchableOpacity>
-          <Text onPress={() => Linking.openURL(`${store.qrValue}`)}>
+        </View>
+      )}
+
+      {store.qrValue.length > 0 && (
+        <View style={styles.result_container}>
+          <Text
+            style={styles.scan_result}
+            onPress={() => Linking.openURL(`${store.qrValue}`)}>
             {store.qrValue}
           </Text>
+
+          <TouchableOpacity onPress={store.resetScanner}>
+            <Text>Back</Text>
+          </TouchableOpacity>
         </View>
       )}
     </SafeAreaView>
@@ -75,6 +85,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     textTransform: 'uppercase',
     fontWeight: 'bold',
+  },
+  result_container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  scan_result: {
+    textAlign: 'center',
+    fontSize: 25,
+    color: 'blue',
   },
 });
 

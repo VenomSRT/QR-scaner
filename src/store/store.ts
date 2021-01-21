@@ -45,6 +45,11 @@ class Store {
     this.errorStatus = status;
     this.errorMessage = error.message;
   }
+
+  resetScanner() {
+    this.qrValue = '';
+    this.scannerOpened = false;
+  }
 }
 
 export default new Store();
