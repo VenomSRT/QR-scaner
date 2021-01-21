@@ -1,25 +1,55 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, View, Text} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import {observer} from 'mobx-react-lite';
+import {CameraKitCameraScreen} from 'react-native-camera-kit';
+import store from './store/store';
 
-declare const global: {HermesInternal: null | {}};
-
-const App = () => {
+const App = observer(() => {
   return (
     <SafeAreaView style={styles.body}>
-      <View style={styles.button_container}>
-        <TouchableOpacity style={styles.camera_button} activeOpacity={0.7}>
-          <Text style={styles.button_text}>Open camera</Text>
-        </TouchableOpacity>
-      </View>
+      {store.errorStatus && <Text>{store.errorMessage}</Text>}
+
+      {store.scannerOpened ? (
+        <View style={styles.camera_container}>
+          <CameraKitCameraScreen
+            showFrame={true}
+            scanBarcode={true}
+            laserColor={'red'}
+            onReadCode={(event: any) => {
+              store.onBarcodeScan(event.nativeEvent.codeStringValue);
+            }}
+          />
+          <View>
+            <Text>TEXT</Text>
+          </View>
+        </View>
+      ) : (
+        <View style={styles.button_container}>
+          <TouchableOpacity
+            style={styles.camera_button}
+            activeOpacity={0.7}
+            onPress={store.openScanner}>
+            <Text style={styles.button_text}>Open camera</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
-};
+});
 
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: '#ddd',
+    backgroundColor: '#eee',
+  },
+  camera_container: {
+    flex: 1,
   },
   button_container: {
     flex: 1,
