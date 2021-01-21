@@ -12,7 +12,6 @@ class Store {
   }
 
   onBarcodeScan(value: string) {
-    // Called after te successful scanning of QRCode/Barcode
     this.qrValue = value;
     this.scannerOpened = false;
   }
@@ -25,11 +24,8 @@ class Store {
             PermissionsAndroid.PERMISSIONS.CAMERA,
           );
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log('scanner1', this.scannerOpened);
             this.qrValue = '';
             this.scannerOpened = true;
-
-            console.log('scanner2', this.scannerOpened);
           } else {
             this.setError(undefined, true);
           }
