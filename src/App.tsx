@@ -5,6 +5,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import {observer} from 'mobx-react-lite';
 import {CameraKitCameraScreen} from 'react-native-camera-kit';
@@ -37,6 +38,9 @@ const App = observer(() => {
             onPress={store.openScanner}>
             <Text style={styles.button_text}>Open camera</Text>
           </TouchableOpacity>
+          <Text onPress={() => Linking.openURL(`${store.qrValue}`)}>
+            {store.qrValue}
+          </Text>
         </View>
       )}
     </SafeAreaView>
