@@ -25,7 +25,6 @@ class Store {
 
       case value.startsWith('http:'):
       case value.startsWith('https:'):
-      case value.startsWith('www'):
         transformatedValue = [['URL', value, '']];
         break;
 
