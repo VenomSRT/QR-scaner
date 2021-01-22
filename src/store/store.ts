@@ -2,7 +2,7 @@ import {makeAutoObservable, runInAction} from 'mobx';
 import {PermissionsAndroid, Platform} from 'react-native';
 
 class Store {
-  qrValue: any = [];
+  qrValue: [] = [];
   scannerOpened: boolean = false;
   errorStatus: boolean = false;
   errorMessage: string = '';
@@ -72,7 +72,7 @@ class Store {
           );
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             runInAction(() => {
-              this.qrValue = '';
+              this.qrValue = [];
               this.scannerOpened = true;
             });
           } else {
@@ -86,7 +86,7 @@ class Store {
       requestCameraPermission();
     } else {
       runInAction(() => {
-        this.qrValue = '';
+        this.qrValue = [];
         this.scannerOpened = true;
       });
     }
@@ -98,7 +98,7 @@ class Store {
   }
 
   resetScanner() {
-    this.qrValue = '';
+    this.qrValue = [];
     this.scannerOpened = false;
   }
 }
