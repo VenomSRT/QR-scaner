@@ -2,7 +2,7 @@ import {makeAutoObservable, runInAction} from 'mobx';
 import {PermissionsAndroid, Platform} from 'react-native';
 
 class Store {
-  qrValue: [] = [];
+  qrValue: string[][] = [];
   scannerOpened: boolean = false;
   errorStatus: boolean = false;
   errorMessage: string = '';
@@ -12,9 +12,7 @@ class Store {
   }
 
   onBarcodeScan(value: string) {
-    console.log(value);
-
-    let transformatedValue: any = [];
+    let transformatedValue: string[][] = [];
 
     switch (true) {
       case value.startsWith('tel:'):
@@ -56,8 +54,6 @@ class Store {
       default:
         break;
     }
-
-    console.log(transformatedValue);
 
     this.qrValue = transformatedValue;
     this.scannerOpened = false;
