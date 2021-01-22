@@ -1,4 +1,4 @@
-import {makeAutoObservable, action} from 'mobx';
+import {makeAutoObservable, runInAction} from 'mobx';
 import {PermissionsAndroid, Platform} from 'react-native';
 
 class Store {
@@ -71,8 +71,10 @@ class Store {
             PermissionsAndroid.PERMISSIONS.CAMERA,
           );
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            this.qrValue = '';
-            this.scannerOpened = true;
+            runInAction(() => {
+              this.qrValue = '';
+              this.scannerOpened = true;
+            });
           } else {
             this.setError(undefined, true);
           }
@@ -83,8 +85,10 @@ class Store {
 
       requestCameraPermission();
     } else {
-      this.qrValue = '';
-      this.scannerOpened = true;
+      runInAction(() => {
+        this.qrValue = '';
+        this.scannerOpened = true;
+      });
     }
   };
 
