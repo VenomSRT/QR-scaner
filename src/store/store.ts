@@ -1,9 +1,9 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import {PermissionsAndroid, Platform} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 
 class Store {
   qrValue: string[][] = [];
-  scannerOpened: boolean = false;
   errorStatus: boolean = false;
   errorMessage: string = '';
 
@@ -55,7 +55,6 @@ class Store {
     }
 
     this.qrValue = transformatedValue;
-    this.scannerOpened = false;
   }
 
   openScanner = () => {
@@ -67,13 +66,14 @@ class Store {
           );
           if (granted === PermissionsAndroid.RESULTS.GRANTED) {
             runInAction(() => {
-              this.qrValue = [];
-              this.scannerOpened = true;
+              Actions.scanner();
             });
           } else {
+            this.qrValue = [];
             this.setError(undefined, true);
           }
         } catch (error) {
+          this.qrValue = [];
           this.setError(error, true);
         }
       };
@@ -82,7 +82,6 @@ class Store {
     } else {
       runInAction(() => {
         this.qrValue = [];
-        this.scannerOpened = true;
       });
     }
   };
@@ -94,7 +93,6 @@ class Store {
 
   resetScanner() {
     this.qrValue = [];
-    this.scannerOpened = false;
   }
 }
 

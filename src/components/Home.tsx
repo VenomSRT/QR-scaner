@@ -1,9 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
-import {observer} from 'mobx-react-lite';
 import store from '../store/store';
 
-export const Home = observer(() => {
+export const Home = () => {
   return (
     <View style={styles.button_container}>
       <TouchableOpacity
@@ -14,7 +13,7 @@ export const Home = observer(() => {
       </TouchableOpacity>
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   button_container: {

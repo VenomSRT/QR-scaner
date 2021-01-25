@@ -14,7 +14,7 @@ export const ScannedResult = observer(() => {
           <FlatList
             data={store.qrValue}
             keyExtractor={() => nextId()}
-            renderItem={(item) => <Item item={item} />}
+            renderItem={(item) => <Item item={item.item} />}
           />
           <Text>{'  }'}</Text>
         </View>
